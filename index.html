@@ -1,1 +1,47 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memory Assistant AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Memory Assistant AI</h1>
+        
+        <div class="add-memory">
+            <h2>Add New Memory</h2>
+            <form action="{{ url_for('add_memory') }}" method="post">
+                <input type="text" name="topic" placeholder="Topic" required>
+                <textarea name="content" placeholder="Content" required></textarea>
+                <input type="text" name="tags" placeholder="Tags (comma-separated)">
+                <button type="submit">Store Memory</button>
+            </form>
+        </div>
+
+        <div class="search">
+            <h2>Search Memories</h2>
+            <form action="{{ url_for('search') }}" method="get">
+                <input type="text" name="q" placeholder="Search term">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="memories">
+            <h2>All Memories</h2>
+            {% for memory in memories %}
+            <div class="memory-card">
+                <h3>{{ memory.topic }}</h3>
+                <p>{{ memory.content }}</p>
+                <div class="tags">
+                    {% for tag in memory.tags %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                <div class="timestamp">{{ memory.timestamp }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
