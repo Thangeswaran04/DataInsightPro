@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Memories - Memory Assistant AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Search Results</h1>
+        
+        <div class="search">
+            <form action="{{ url_for('search') }}" method="get">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search term">
+                <button type="submit">Search</button>
+            </form>
+            <a href="{{ url_for('index') }}" class="back-link">Back to Home</a>
+        </div>
+
+        <div class="memories">
+            {% if memories %}
+                {% for memory in memories %}
+                <div class="memory-card">
+                    <h3>{{ memory.topic }}</h3>
+                    <p>{{ memory.content }}</p>
+                    <div class="tags">
+                        {% for tag in memory.tags %}
+                        <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="timestamp">{{ memory.timestamp }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-results">No matching memories found.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
